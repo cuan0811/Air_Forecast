@@ -184,170 +184,26 @@ def predict(node, data_test):
     return predictions
 
 
-# Tạo nút gốc
 root_node = Node()
 
 data = pd.read_excel("D:\Student\project\data-mining\cuan0811-main\Data_Set\data_set_model_processed2.xlsx")
-# data = pd.read_excel("D:\Student\project\data-mining\Data_Set\play_Tenis_1.xlsx")
-# data = pd.read_excel("D:\Student\project\data-mining\Data_Set\data100.xlsx")
 
 from sklearn.model_selection import train_test_split
 data = data.iloc[0:10000]
 X = data.drop(columns='Label')
 y = data['Label']
-# print(X, y)
+
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 data_train = pd.concat([X_train, y_train], axis=1)
 print(data_train)
 decision_tree_algorithm_C45(root_node, data_train, 'Label', min_samples_split=10)
 prune_tree(root_node)
-# In cây quyết định
+
 print_tree(root_node)
 
-# Dự đoán nhãn cho dữ liệu kiểm thử
 predictions = predict(root_node, X_test)
-# print("Predictions:", predictions)
 
 from sklearn.metrics import accuracy_score
-from sklearn.tree import DecisionTreeClassifier
 
-clf = DecisionTreeClassifier(random_state=42)
-clf.fit(X_train, y_train)
-
-# Dự đoán nhãn cho tập kiểm tra
-y_pred = clf.predict(X_test)
-
-# Đánh giá độ chính xác của mô hình với mô hình thư viện sklearn
-accuracy = accuracy_score(predictions, y_pred)
-print("Accuracy:", accuracy)
-
-# data_train = data.iloc[0:1000]
-from sklearn.model_selection import train_test_split
-# from sklearn.model_selection import train_test_split
-# # print(data)
-# data = pd.read_excel("D:/Student/project/data-mining/Data_Set/data.xlsx")
-# # data = data.drop(columns=['station', 'No', 'month', 'year', 'day', 'hour', 'wd', 'TEMP', 'PRES', 'DEWP', 'RAIN', 'WSPM'])
-# # print(data)
-# X = data.drop(columns='Label')
-# y = data['Label']
-# # print(X, y)
-# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-# data_train = pd.concat([X_train, y_train], axis=1)
-# print(data_train)
-# decision_tree_algorithm_C45(root_node, data_train, 'Label', min_samples_split=20)
-#
-# prune_tree(root_node)
-# # In cây quyết định
-# print_tree(root_node)
-#
-# # Dự đoán nhãn cho dữ liệu kiểm thử
-# predictions = predict(root_node, X_test)
-# # print("Predictions:", predictions)
-#
-# from sklearn.metrics import accuracy_score
-# from sklearn.tree import DecisionTreeClassifier
-#
-# clf = DecisionTreeClassifier(random_state=42)
-# clf.fit(X_train, y_train)
-#
-# # Dự đoán nhãn cho tập kiểm tra
-# y_pred = clf.predict(X_test)
-#
-# # Đánh giá độ chính xác của mô hình với mô hình thư viện sklearn
-# accuracy = accuracy_score(predictions, y_pred)
-# print("Accuracy:", accuracy)
-#
-# data_test = data.iloc[500:2000]
-# y_pred = data['Label'].iloc[500:2000]
-# # Dự đoán nhãn cho dữ liệu kiểm thử
-# predictions = predict(root_node, data_test)
-# print("Predictions:", predictions)
-#
-# from sklearn.metrics import accuracy_score
-# accuracy = accuracy_score(predictions, y_pred)
-# print("Accuracy:", accuracy)
-# Tải dữ liệu
-# data = pd.read_excel("D:/Student/project/data-mining/Data_Set/play_Tenis_1.xlsx")
-
-# Tách dữ liệu thành các thuộc tính và nhãn
-
-#
-# # Báo cáo phân loại
-# class_report = classification_report(y_test, y_pred)
-# print("Classification Report:")
-# print(class_report)
-#
-# # Ma trận nhầm lẫn
-# conf_matrix = confusion_matrix(y_test, y_pred)
-# print("Confusion Matrix:")
-# print(conf_matrix)
-#
-# # Biểu đồ ma trận nhầm lẫn
-# plt.figure(figsize=(8, 6))
-# sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', cbar=False)
-# plt.xlabel('Predicted Label')
-# plt.ylabel('True Label')
-# plt.title('Confusion Matrix')
-# plt.show()
-#
-# # Vẽ cây quyết định
-# plt.figure(figsize=(20,10))
-# tree.plot_tree(clf, feature_names=X.columns, class_names=clf.classes_, filled=True, rounded=True)
-# plt.show()
-
-
-# # So sánh dự đoán với giá trị nhãn thực tế
-# actual_labels = data_test['play']
-# accuracy = np.mean(predictions == actual_labels)
-# print("Accuracy:", accuracy)
-
-# actual_labels = data_test['Label']
-# from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, roc_auc_score
-# import seaborn as sns
-# import matplotlib.pyplot as plt
-#
-# # Đánh giá độ chính xác
-# accuracy = accuracy_score(actual_labels, predictions)
-# print("Accuracy:", accuracy)
-#
-# # Báo cáo phân loại
-# class_report = classification_report(actual_labels, predictions)
-# print("Classification Report:")
-# print(class_report)
-#
-# # Ma trận nhầm lẫn
-# conf_matrix = confusion_matrix(actual_labels, predictions)
-# print("Confusion Matrix:")
-# print(conf_matrix)
-#
-# # Biểu đồ ma trận nhầm lẫn
-# plt.figure(figsize=(8, 6))
-# sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', cbar=False)
-# plt.xlabel('Predicted Label')
-# plt.ylabel('True Label')
-# plt.title('Confusion Matrix')
-# plt.show()
-
-
-
-# Đường cong ROC và AUC
-# Note: Đường cong ROC và AUC chỉ áp dụng cho bài toán phân loại nhị phân
-# Nếu bạn đang làm việc với nhiều lớp, bạn cần sử dụng một phương pháp khác như one-vs-rest (OvR) hoặc one-vs-one (OvO).
-# if len(set(actual_labels)) == 2:  # Nếu chỉ có hai lớp
-#     auc_score = roc_auc_score(actual_labels, predictions)
-#     print("ROC AUC Score:", auc_score)
-#     # Plot ROC Curve
-#     fpr, tpr, _ = roc_curve(actual_labels, predictions)
-#     plt.figure()
-#     plt.plot(fpr, tpr, color='darkorange', lw=2, label='ROC curve (area = %0.2f)' % auc_score)
-#     plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
-#     plt.xlim([0.0, 1.0])
-#     plt.ylim([0.0, 1.05])
-#     plt.xlabel('False Positive Rate')
-#     plt.ylabel('True Positive Rate')
-#     plt.title('Receiver Operating Characteristic (ROC) Curve')
-#     plt.legend(loc="lower right")
-#     plt.show()
-# else:
-#     print("ROC AUC Score is not applicable for multi-class classification.")
-
+accuracy = accuracy_score(predictions, y_test)
+print("Accuracy :", accuracy)
